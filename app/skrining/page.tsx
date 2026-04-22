@@ -10,30 +10,39 @@ import ErrorScreen from "@/components/ErrorScreen";
 import QuestionCard from "@/components/QuestionCard";
 import ResultCard from "@/components/ResultCard";
 
-
 export default function Skrining() {
   const router = useRouter();
+
   const [step, setStep] = useState(0);
-  // Store answers as an array indexed by question number so we can go back
   const [answers, setAnswers] = useState<(Answer | null)[]>(
     Array(questions.length).fill(null)
   );
+
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ResultType | null>(null);
   const [error, setError] = useState("");
   const [profile, setProfile] = useState<ProfileType | null>(null);
 
+  // 🔥 ambil profile dari localStorage
   useEffect(() => {
     const data = localStorage.getItem("profile");
-    if (data) setProfile(JSON.parse(data));
+    if (data) {
+      try {
+        setProfile(JSON.parse(data));
+      } catch {
+        console.log("Profile parse error");
+      }
+    }
   }, []);
 
+  // 🔥 handle jawab
   const handleAnswer = (value: Answer) => {
     const newAnswers = [...answers];
     newAnswers[step] = value;
     setAnswers(newAnswers);
 
     const nextStep = step + 1;
+
     if (nextStep === questions.length) {
       submitData(newAnswers as Answer[]);
     } else {
@@ -41,68 +50,95 @@ export default function Skrining() {
     }
   };
 
+  // 🔙 tombol back
   const handleBack = () => {
     if (step === 0) {
-      router.push("/form"); // 
+      router.push("/form");
     } else {
       setStep((prev) => prev - 1);
     }
   };
 
+  // 🚀 SUBMIT KE API
   const submitData = async (finalAnswers: Answer[]) => {
     setLoading(true);
     setError("");
+
     try {
-      const savedProfile = JSON.parse(localStorage.getItem("profile") || "{}");
+      const savedProfile = JSON.parse(
+        localStorage.getItem("profile") || "{}"
+      );
+
       const payload = {
         profile: {
           name: savedProfile.name || "Guest",
           age: savedProfile.age || 0,
           gender: savedProfile.gender || "L",
-          focusArea: "belum tahu",
         },
         answers: finalAnswers,
       };
 
+      console.log("📤 KIRIM:", payload);
+
       const res = await fetch("/api/screening", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(payload),
       });
 
       const data = await res.json();
+
+      console.log("📥 RESPONSE:", data);
+
       if (!res.ok) {
-        setError(data.error || "Terjadi kesalahan");
+        setError(data.error || "Terjadi kesalahan dari server");
         return;
       }
+
+      // 🔥 VALIDASI RESPONSE
+      if (!data || !data.result || !data.result.detail) {
+        setError("Format response backend tidak sesuai");
+        return;
+      }
+
       setResult(data.result);
+
     } catch (err: any) {
+      console.log("🔥 ERROR:", err);
       setError(err.message || "Gagal menghubungi server");
     } finally {
       setLoading(false);
     }
   };
 
+  // 🔄 reset
   const reset = () => {
     localStorage.removeItem("profile");
     router.push("/form");
   };
 
+  // ⏳ loading
   if (loading) return <LoadingScreen />;
+
+  // ❌ error
   if (error) return <ErrorScreen message={error} onRetry={reset} />;
-  if (result)
+
+  // ✅ hasil
+  if (result) {
     return (
       <ResultCard
         result={result}
         profile={profile}
         onDashboard={() => router.push("/")}
         onReset={reset}
-        onPricing={() => router.push("/pricing")}
         onDokter={() => router.push("/dokter")}
-        onBelajar={() => router.push("/belajar")}
       />
     );
+  }
 
+  // ❓ pertanyaan
   return (
     <QuestionCard
       question={questions[step]}
