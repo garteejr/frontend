@@ -2,7 +2,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const res = await fetch("https://autify-backend.vercel.app/api/screening-result", {
+    const res = await fetch("https://autify-backend.vercel.app/api/screening", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import CardMenu from "@/components/CardMenu";
 import { menu } from "@/data/menu";
+import { JSX } from "react/jsx-runtime";
 
 export default function Home(): JSX.Element {
   return (
