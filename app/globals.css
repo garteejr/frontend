@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
@@ -20,7 +22,94 @@
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans, Arial, Helvetica, sans-serif);
+}
+
+/* ── Page background ───────────────────────────────────────── */
+.page-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1FA88C 0%, #F4A07A 100%);
+  padding: 1.5rem 1rem 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* ── Main card ─────────────────────────────────────────────── */
+.main-card {
+  width: 100%;
+  max-width: 480px;
+  background: #FDFAF5;
+  border-radius: 28px;
+  padding: 1.5rem 1.25rem 1.75rem;
+  position: relative;
+  /* Gradient top border via box-shadow trick */
+  box-shadow:
+    0 0 0 4px transparent,
+    inset 0 4px 0 0 transparent;
+}
+
+/* Gradient top border */
+.main-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 28px 28px 0 0;
+  background: linear-gradient(90deg, #C6E84A 0%, #F4A07A 50%, #E85A6A 100%);
+}
+
+/* ── Header badge ──────────────────────────────────────────── */
+.header-badge {
+  display: inline-block;
+  background: #F5DC3A;
+  color: #4A3800;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ── Stat cards ────────────────────────────────────────────── */
+.stat-card {
+  background: #F1EFE8;
+  border-radius: 16px;
+  padding: 0.75rem 0.875rem;
+}
+
+/* ── Domain cards ──────────────────────────────────────────── */
+.domain-card {
+  background: #ffffff;
+  border: 0.5px solid #D3D1C7;
+  border-radius: 20px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.domain-card-accent {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 20px 20px 0 0;
+}
+
+/* ── Level buttons ─────────────────────────────────────────── */
+.level-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1.5px solid;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.level-btn:hover {
+  opacity: 0.75;
 }

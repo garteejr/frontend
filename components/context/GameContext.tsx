@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import type { GameId, RewardData, SectionId } from '../types';
+import type { GameId, RewardData, SectionId } from '@/components/types';
 
 interface GameContextValue {
   score: number;

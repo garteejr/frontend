@@ -1,14 +1,14 @@
 'use client';
 
 import { useGame } from '../context/GameContext';
-import type { SectionId } from '../types';
+import type { SectionId } from '@/components/types';
 
 const navItems: { id: SectionId; icon: string; label: string; color: string; border: string }[] = [
   { id: 'home',      icon: '🏠', label: 'Beranda', color: '#FFD60A', border: '#FFD60A' },
   { id: 'attention', icon: '🎯', label: 'Fokus',   color: '#FFD60A', border: '#FFD60A' },
-  { id: 'language',  icon: '💬', label: 'Bahasa',  color: '#22C55E', border: '#22C55E' },
-  { id: 'cognitive', icon: '🧠', label: 'Kognitif',color: '#3B82F6', border: '#3B82F6' },
-  { id: 'motor',     icon: '✋', label: 'Motorik', color: '#FF6B35', border: '#FF6B35' },
+  { id: 'communication',  icon: '💬', label: 'Bahasa',  color: '#22C55E', border: '#22C55E' },
+  { id: 'sensory', icon: '🧠', label: 'Kognitif',color: '#3B82F6', border: '#3B82F6' },
+  { id: 'motoric',     icon: '✋', label: 'Motorik', color: '#FF6B35', border: '#FF6B35' },
   { id: 'social',    icon: '❤️', label: 'Sosial',  color: '#FF4D8F', border: '#FF4D8F' },
 ];
 

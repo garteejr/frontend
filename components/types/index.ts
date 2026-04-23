@@ -1,56 +1,41 @@
-export type SectionId = 'home' | 'attention' | 'language' | 'cognitive' | 'motor' | 'social';
+export type Level = 1 | 2 | 3;
 
-export type GameId =
-  | 'focus'
-  | 'memory'
-  | 'vocab'
-  | 'story'
-  | 'pattern'
-  | 'sort'
-  | 'draw'
-  | 'emotion'
-  | 'breathing'
-  | null;
+export type Domain =
+  | 'attention'
+  | 'communication'
+  | 'sensory'
+  | 'motoric'
+  | 'social';
 
+export type SectionId = 'home' | Domain;
+
+// GameId — null berarti tidak ada game yang sedang aktif
+export type GameId = `${Domain}_${Level}` | null;
+
+// RewardData — payload untuk modal reward setelah level selesai
 export interface RewardData {
   stars: string;
   title: string;
   message: string;
 }
 
-export interface VocabItem {
-  img: string;
-  question: string;
-  options: string[];
-  answerIndex: number;
+export interface GameProps {
+  level: Level;
+  onComplete: (score: number, total: number) => void;
 }
 
-export interface StoryNode {
-  scene: string;
-  text: string;
-  choices: { text: string; next: number }[];
-}
-
-export interface PatternItem {
-  seq: string[];
-  ans: string;
-  choices: string[];
-}
-
-export interface SortItem {
+export interface DomainConfig {
+  key: Domain;
+  label: string;
   emoji: string;
-  category: string;
-}
-
-export interface Emotion {
-  emoji: string;
-  name: string;
-  desc: string;
   color: string;
+  desc: string;
 }
 
-export interface EmotionQuestion {
-  img: string;
-  question: string;
-  answer: string;
+export interface LevelConfig {
+  n: Level;
+  label: string;
+  color: string;
+  bg: string;
+  tc: string;
 }

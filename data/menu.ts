@@ -22,6 +22,6 @@ export const menu: MenuType[] = [
     id: 3,
     title: "Pembelajaran",
     image: "https://res.cloudinary.com/dliqoyywv/image/upload/v1776856547/Card_Image_1_drq9ti",
-    link: "/belajar",
+    link: "/[domain]/[level]",
   },
 ];

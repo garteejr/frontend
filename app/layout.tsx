@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 
 // Metadata (Silakan sesuaikan judulnya)
 export const metadata: Metadata = {
-  title: 'BelajarBersama — Platform Pembelajaran Anak Spesial',
-  description: 'Platform pembelajaran interaktif dan menyenangkan untuk anak berkebutuhan khusus.',
+  title: 'Autify',
+  description: 'M-CHAT-R/f.',
 };
 
 export default function RootLayout({
